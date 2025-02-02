@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Os Crias</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-family: 'Ubuntu', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            opacity: 0; /* Inicialmente invisível para o fade-in */
+            animation: fadeIn 1.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 1px #cbabf1, 0 0 3px #cbabf1;
+            margin-bottom: 20px;
+        }
+        .login-container {
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 20px;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 0 15px #cbabf1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .login-container label {
+            font-size: 1.1rem;
+            text-align: left;
+            width: 100%;
+        }
+        .login-container input, .login-container select {
+            width: 90%;
+            padding: 10px;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-size: 1rem;
+            outline: none;
+            font-family: 'Ubuntu', sans-serif;
+        }
+        .login-container input:focus, .login-container select:focus {
+            border-color: #9b7fd9;
+        }
+        .login-container input[type="password"] {
+            color: #cbabf1;
+            letter-spacing: 3px;
+        }
+        .login-container button {
+            width: 90%;
+            padding: 10px;
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            color: #cbabf1;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .login-container button:hover {
+            background-color: #cbabf1;
+            color: #221f26;
+            transform: scale(1.05);
+        }
+        .error {
+            border-color: #ff4d4d !important;
+            animation: blink 0.5s 3;
+        }
+        @keyframes blink {
+            50% {
+                border-color: #ff4d4d;
+            }
+        }
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #cbabf1;
+            margin-bottom: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="greeting">Olá! Ótima noite, vamos começar? Quem vai entrar hoje?</h1>
+    <div class="login-container" id="chooseNameContainer">
+        <label for="nameSelect">Escolha seu nome:</label>
+        <select id="nameSelect">
+            <option value="">Selecione...</option>
+            <option value="Evelyn">Evelyn</option>
+            <option value="Patrick">Patrick</option>
+            <option value="Eishyla">Eishyla</option>
+        </select>
+    </div>
+    <div class="login-container hidden" id="securityQuestionContainer">
+        <img id="profileImage" class="profile-image" src="" alt="Foto de perfil">
+        <label id="securityQuestionLabel"></label>
+        <input type="text" id="securityAnswer" placeholder="Digite sua resposta">
+        <button onclick="verifySecurityAnswer()">Verificar</button>
+    </div>
+    <div class="login-container hidden" id="createPasswordContainer">
+        <img id="profileImageCreate" class="profile-image" src="" alt="Foto de perfil">
+        <h2 id="createPasswordGreeting"></h2>
+        <label for="newPassword">Crie sua senha:</label>
+        <input type="password" id="newPassword" placeholder="Digite sua senha">
+        <button onclick="createPassword()">Concluir</button>
+    </div>
+    <script>
+        // Efeito de fade-in ao carregar a página
+        document.body.style.opacity = 0;
+        setTimeout(() => {
+            document.body.style.opacity = 1;
+        }, 100);
+
+        // Função para atualizar a saudação conforme o horário
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            let greeting = "Olá! ";
+            if (hour >= 0 && hour < 4.5) {
+                greeting += "Ótima madrugada!";
+            } else if (hour >= 4.5 && hour < 12) {
+                greeting += "Ótimo dia!";
+            } else if (hour >= 12 && hour < 18) {
+                greeting += "Ótima tarde!";
+            } else {
+                greeting += "Ótima noite!";
+            }
+            greeting += " Vamos começar? Quem vai entrar hoje?";
+            document.getElementById("greeting").textContent = greeting;
+        }
+        updateGreeting();
+        setInterval(updateGreeting, 60000);
+
+        // Dados de segurança
+        const securityQuestions = {
+            Evelyn: "Qual seu código de acesso único?",
+            Patrick: "Qual seu código de acesso único?",
+            Eishyla: "Qual seu código de acesso único?"
+        };
+        const securityAnswers = {
+            Evelyn: "150107",
+            Patrick: "180706",
+            Eishyla: "384679"
+        };
+        const profileImages = {
+            Evelyn: "eve.png",
+            Patrick: "patri.png",
+            Eishyla: "eishyla.png"
+        };
+
+        // Escolha do nome
+        const nameSelect = document.getElementById("nameSelect");
+        nameSelect.addEventListener("change", () => {
+            const selectedName = nameSelect.value;
+            if (selectedName) {
+                document.getElementById("chooseNameContainer").classList.add("hidden");
+                document.getElementById("securityQuestionContainer").classList.remove("hidden");
+                document.getElementById("securityQuestionLabel").textContent = securityQuestions[selectedName];
+                document.getElementById("profileImage").src = profileImages[selectedName];
+            }
+        });
+
+        // Verificação da resposta de segurança
+        let securityAttempts = 0;
+        function verifySecurityAnswer() {
+            const selectedName = nameSelect.value;
+            const answer = document.getElementById("securityAnswer").value.trim();
+            if (answer === securityAnswers[selectedName]) {
+                document.getElementById("securityQuestionContainer").classList.add("hidden");
+                document.getElementById("createPasswordContainer").classList.remove("hidden");
+                document.getElementById("createPasswordGreeting").textContent = `Olá, ${selectedName}! Vamos criar uma senha para você?`;
+                document.getElementById("profileImageCreate").src = profileImages[selectedName];
+            } else {
+                securityAttempts++;
+                if (securityAttempts >= 3) {
+                    alert("Você errou 3 vezes. A página será fechada.");
+                    forceCloseWindow();
+                } else {
+                    document.getElementById("securityAnswer").classList.add("error");
+                    setTimeout(() => {
+                        document.getElementById("securityAnswer").classList.remove("error");
+                    }, 1500);
+                    alert("Resposta incorreta. Tente novamente.");
+                }
+            }
+        }
+
+        // Criação da senha
+        function createPassword() {
+            const selectedName = nameSelect.value;
+            const newPassword = document.getElementById("newPassword").value.trim();
+            if (newPassword) {
+                localStorage.setItem("username", selectedName);
+                localStorage.setItem("password", newPassword);
+                alert("Senha criada com sucesso! Agora faça login.");
+                window.location.href = `login${selectedName.toLowerCase()}.html`;
+            } else {
+                alert("Por favor, insira uma senha.");
+            }
+        }
+
+        // Função para forçar o fechamento da janela
+        function forceCloseWindow() {
+            window.open('', '_self', '');
+            window.close();
+        }
+
+        // Verifica se já existe uma conta criada
+        const storedUsername = localStorage.getItem("username");
+        if (storedUsername) {
+            window.location.href = `login${storedUsername.toLowerCase()}.html`;
+        }
+    </script>
+</body>
+</html>

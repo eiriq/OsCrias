@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home - Os Crias</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-family: 'Ubuntu', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 1px #cbabf1, 0 0 3px #cbabf1;
+            margin-bottom: 20px;
+        }
+        .home-container {
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 20px;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 0 15px #cbabf1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .home-container button {
+            width: 90%;
+            padding: 10px;
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            color: #cbabf1;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .home-container button:hover {
+            background-color: #cbabf1;
+            color: #221f26;
+            transform: scale(1.05);
+        }
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: #cbabf1;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            transition: transform 0.3s ease;
+        }
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- Botão de fechar no canto superior direito -->
+    <button class="close-btn" onclick="window.location.href='index.html'">✖</button>
+
+    <h1 id="greeting">Olá! Essa é a nossa casa!</h1>
+    <div class="home-container">
+        <button onclick="redirectTo('programacao.html')">Programação</button>
+        <button onclick="redirectTo('pessoal.html')">Pessoal</button>
+        <button onclick="redirectTo('colecao.html')">Coleção</button>
+    </div>
+    <script>
+        // Função para redirecionar
+        function redirectTo(page) {
+            window.location.href = page;
+        }
+    </script>
+</body>
+</html>

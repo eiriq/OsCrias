@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Evelyn - Os Crias</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-family: 'Ubuntu', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1.5s ease forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 1px #cbabf1, 0 0 3px #cbabf1;
+            margin-bottom: 20px;
+        }
+        .login-container {
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 20px;
+            padding: 30px;
+            width: 350px;
+            box-shadow: 0 0 15px #cbabf1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .login-container label {
+            font-size: 1.1rem;
+            text-align: left;
+            width: 100%;
+        }
+        .login-container input {
+            width: 90%;
+            padding: 10px;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-size: 1rem;
+            outline: none;
+            font-family: 'Ubuntu', sans-serif;
+        }
+        .login-container input:focus {
+            border-color: #9b7fd9;
+        }
+        .login-container input[type="password"] {
+            color: #cbabf1;
+            letter-spacing: 3px;
+        }
+        .login-container button {
+            width: 90%;
+            padding: 10px;
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            color: #cbabf1;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .login-container button:hover {
+            background-color: #cbabf1;
+            color: #221f26;
+            transform: scale(1.05);
+        }
+        .error {
+            border-color: #ff4d4d !important;
+            animation: blink 0.5s 3;
+        }
+        @keyframes blink {
+            50% {
+                border-color: #ff4d4d;
+            }
+        }
+        .profile-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 2px solid #cbabf1;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="greeting">Olá, Evelyn! Vamos começar?</h1>
+    <div class="login-container">
+        <img src="eve.png" class="profile-image" alt="Foto de perfil">
+        <label for="password">Senha:</label>
+        <input type="password" id="password" placeholder="Digite sua senha">
+        <button onclick="login()">Ir!</button>
+    </div>
+    <script>
+        // Função de login
+        let attempts = 0;
+        function login() {
+            const password = document.getElementById("password").value.trim();
+            const storedPassword = localStorage.getItem("password");
+
+            if (password === storedPassword) {
+                window.location.href = "home.html";
+            } else {
+                attempts++;
+                if (attempts >= 3) {
+                    alert("Você errou 3 vezes. A página será fechada.");
+                    forceCloseWindow();
+                } else {
+                    document.getElementById("password").classList.add("error");
+                    setTimeout(() => {
+                        document.getElementById("password").classList.remove("error");
+                    }, 1500);
+                    alert("Senha incorreta. Tente novamente.");
+                }
+            }
+        }
+
+        // Função para forçar o fechamento da janela
+        function forceCloseWindow() {
+            window.open('', '_self', '');
+            window.close();
+        }
+    </script>
+</body>
+</html>

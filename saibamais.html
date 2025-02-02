@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saiba Mais - Os Crias</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-family: 'Ubuntu', sans-serif;
+            min-height: 100vh;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin: 20px 0 40px 0;
+            text-align: left;
+            width: 90%;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background-color: #2d2a32;
+            border-radius: 15px;
+            padding: 30px;
+            margin: 20px 0;
+            box-shadow: 0 0 15px rgba(203, 171, 241, 0.1);
+        }
+
+        .chart {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+        .chart-svg {
+            transform: rotate(-90deg);
+        }
+
+        .chart-circle {
+            fill: none;
+            stroke-width: 8;
+        }
+
+        .chart-circle-bg {
+            stroke: #3d3a42;
+        }
+
+        .chart-circle-progress {
+            stroke: #cbabf1;
+            stroke-linecap: round;
+            animation: progress 1s ease-out forwards;
+        }
+
+        .stat-info {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: #cbabf1;
+            margin: 10px 0;
+        }
+
+        .stat-text {
+            font-size: 1.2rem;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: #cbabf1;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        @keyframes progress {
+            from { stroke-dashoffset: 339; }
+        }
+
+        .final-message {
+            text-align: center;
+            margin: 50px 0;
+            font-size: 1.2rem;
+            padding: 20px;
+            border-top: 2px solid #cbabf1;
+        }
+    </style>
+</head>
+<body>
+    <button class="close-btn" onclick="window.location.href='colecao.html'">✖</button>
+    <h1>Olá, vamos saber um pouco mais...</h1>
+
+    <div class="stats-container">
+        <!-- Tempo de Jogo -->
+        <div class="stat-card">
+            <div class="chart">
+                <svg class="chart-svg" width="150" height="150">
+                    <circle class="chart-circle chart-circle-bg" cx="75" cy="75" r="65"/>
+                    <circle class="chart-circle chart-circle-progress" cx="75" cy="75" r="65" 
+                            stroke-dasharray="408" 
+                            stroke-dashoffset="408"
+                            style="stroke-dashoffset: 122"/>
+                </svg>
+            </div>
+            <div class="stat-info">
+                <div class="stat-number">12.384 horas</div>
+                <div class="stat-text">Tempo total de jogatinas<br>(≈17 meses ininterruptos!)</div>
+            </div>
+        </div>
+
+        <!-- Tempo de Conversas -->
+        <div class="stat-card">
+            <div class="chart">
+                <svg class="chart-svg" width="150" height="150">
+                    <circle class="chart-circle chart-circle-bg" cx="75" cy="75" r="65"/>
+                    <circle class="chart-circle chart-circle-progress" cx="75" cy="75" r="65" 
+                            stroke-dasharray="408" 
+                            stroke-dashoffset="408"
+                            style="stroke-dashoffset: 68"/>
+                </svg>
+            </div>
+            <div class="stat-info">
+                <div class="stat-number">14.592 horas</div>
+                <div class="stat-text">Tempo em conversas<br>(≈20 meses de conexão constante)</div>
+            </div>
+        </div>
+
+        <!-- Jogos -->
+        <div class="stat-card">
+            <div class="chart">
+                <svg class="chart-svg" width="150" height="150">
+                    <circle class="chart-circle chart-circle-bg" cx="75" cy="75" r="65"/>
+                    <circle class="chart-circle chart-circle-progress" cx="75" cy="75" r="65" 
+                            stroke-dasharray="408" 
+                            stroke-dashoffset="408"
+                            style="stroke-dashoffset: 102"/>
+                </svg>
+            </div>
+            <div class="stat-info">
+                <div class="stat-number">15+ jogos</div>
+                <div class="stat-text">Diversão garantida<br>em diferentes universos</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="final-message">
+        <p>E isso é só o começo!<br>
+        A cada dia que passa, novas memórias são criadas<br>
+        e novas aventuras estão por vir. 🚀</p>
+    </div>
+</body>
+</html>

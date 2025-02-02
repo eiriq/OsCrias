@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Os Crias</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-family: 'Ubuntu', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-shadow: 0 0 10px #cbabf1, 0 0 20px #cbabf1;
+            animation: glow 1.5s infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 10px #cbabf1, 0 0 20px #cbabf1;
+            }
+            to {
+                text-shadow: 0 0 20px #cbabf1, 0 0 40px #cbabf1;
+            }
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .btn {
+            background-color: transparent;
+            border: 2px solid #cbabf1;
+            color: #cbabf1;
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            margin: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background-color: #cbabf1;
+            color: #221f26;
+            transform: scale(1.1);
+            box-shadow: 0 0 10px #cbabf1;
+        }
+
+        .settings-icon {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .settings-icon:hover {
+            transform: rotate(90deg) scale(1.1);
+        }
+
+        .settings-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 250px;
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 0 10px #cbabf1;
+            display: none;
+            flex-direction: column;
+            text-align: left;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hidden {
+            animation: fadeOut 0.5s forwards;
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(-10px); }
+        }
+
+        .settings-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .settings-content {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .settings-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: #cbabf1;
+            font-size: 1.2rem;
+            cursor: pointer;
+            position: absolute;
+            top: 5px;
+            right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Os Crias</h1>
+    <div class="buttons">
+        <a href="programacao.html" class="btn">Programação</a>
+        <a href="about.html" class="btn">Nós</a>
+    </div>
+
+    <!-- Ícone de configurações -->
+    <div class="settings-icon" onclick="toggleSettings()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#cbabf1">
+            <path d="M12 15.5A3.5 3.5 0 0 1 8.5 12 3.5 3.5 0 0 1 12 8.5a3.5 3.5 0 0 1 3.5 3.5 3.5 3.5 0 0 1-3.5 3.5m7.43-2.53c.04-.32.07-.64.07-.97 0-.33-.03-.66-.07-1l2.11-1.63c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.31-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.37-2.65A.506.506 0 0 0 14 2h-4c-.25 0-.46.18-.5.42l-.37 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64L4.57 11c-.04.34-.07.67-.07 1 0 .33.03.65.07.97l-2.11 1.66c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1.01c.52.4 1.08.74 1.69.99l.37 2.65c.04.24.25.42.5.42h4c.25 0 .46-.18.5-.42l.37-2.65c.61-.25 1.17-.59 1.69-.99l2.49 1.01c.22.08.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.66z"/>
+        </svg>
+    </div>
+
+    <!-- Container de configurações -->
+    <div id="settings" class="settings-container">
+        <button class="close-btn" onclick="toggleSettings()">✖</button>
+        <div class="settings-title">Infos</div>
+        <div class="settings-content">
+            Os Crias<br>
+            Última atualização: 31 de janeiro<br>
+            Mantenedor: Ashley<br>
+            Versão: 1.0 Alpha
+        </div>
+        <div class="settings-buttons">
+            <a href="static.html" class="btn">Dados</a>
+            <a href="login.html" class="btn">Login</a>
+        </div>
+    </div>
+
+    <script>
+        function toggleSettings() {
+            const settings = document.getElementById("settings");
+            if (settings.style.display === "none" || settings.style.display === "") {
+                settings.style.display = "flex";
+                settings.classList.remove("hidden");
+            } else {
+                settings.classList.add("hidden");
+                setTimeout(() => settings.style.display = "none", 500);
+            }
+        }
+    </script>
+</body>
+</html>

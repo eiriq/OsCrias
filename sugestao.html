@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugestão - Os Crias</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-family: 'Ubuntu', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            text-shadow: 0 0 5px #cbabf1, 0 0 10px #cbabf1;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 400;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-container {
+            width: 80%;
+            max-width: 500px;
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px #cbabf1;
+        }
+
+        .form-container label {
+            display: block;
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .form-container input,
+        .form-container textarea {
+            width: 90%; /* Reduzi a largura para centralizar */
+            padding: 10px;
+            margin: 0 auto 20px auto; /* Centraliza os campos */
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-size: 1rem;
+            outline: none;
+            display: block; /* Garante que o margin auto funcione */
+        }
+
+        .form-container input:focus,
+        .form-container textarea:focus {
+            border-color: #9b7fd9;
+        }
+
+        .form-container button {
+            width: 90%; /* Reduzi a largura para centralizar */
+            padding: 10px;
+            background-color: transparent;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            color: #cbabf1;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block; /* Garante que o margin auto funcione */
+            margin: 0 auto; /* Centraliza o botão */
+        }
+
+        .form-container button:hover {
+            background-color: #cbabf1;
+            color: #221f26;
+            transform: scale(1.05);
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: #cbabf1;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <button class="close-btn" onclick="window.location.href='home.html'">✖</button>
+    <h1>Tem novas ideias de jogos ou algo para fazermos??</h1>
+    <h2>Deixe escrito aqui e salvaremos no servidor para curtirmos mais tarde!</h2>
+    <div class="form-container">
+        <form action="https://formspree.io/f/xvgzrqka" method="POST">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name" placeholder="Seu nome" required>
+            <label for="message">Escreva o que quiser:</label>
+            <textarea id="message" name="message" rows="5" placeholder="Sua sugestão..." required></textarea>
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</body>
+</html>

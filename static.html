@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dados - Os Crias</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-family: 'Ubuntu', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .log-container {
+            width: 80%;
+            max-width: 800px;
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 20px #cbabf1;
+            position: relative;
+            overflow-y: auto;
+            max-height: 70vh;
+        }
+
+        /* Estilo da barra de rolagem */
+        .log-container::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .log-container::-webkit-scrollbar-track {
+            background: #221f26;
+            border-radius: 5px;
+        }
+
+        .log-container::-webkit-scrollbar-thumb {
+            background: #cbabf1;
+            border-radius: 5px;
+        }
+
+        .log-container::-webkit-scrollbar-thumb:hover {
+            background: #9b7fd9;
+        }
+
+        .log-content {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: #cbabf1;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+    </style>
+</head>
+<body>
+    <button class="close-btn" onclick="window.location.href='index.html'">✖</button>
+    <div class="log-container">
+        <div class="log-content" id="logContent"></div>
+    </div>
+
+    <script>
+        // Pop-up inicial
+        alert("Olá! Essa página é dedicada somente aos nerds de programação, nesse caso aqui, só o Patrick, mas caso você seja a Bauni ou a Evelyn, e tiverem um mínimo de interesse ou quiserem seguir esse rumo, quem sabe não seja útil. Essa página é dedicada a mostrar o LOG e processos da Ashley em relação a esse site, vão poder analisar e ver como ela é... 'pensando'.");
+
+        // Log fictício da Ashley com humor e opiniões
+        const logText = `
+[Ashley LOG] Iniciando processo de criação do site "Os Crias"...
+[Ashley LOG] Analisando requisitos iniciais... Hmm, parece que querem algo moderno e funcional. Vamos lá!
+[Ashley LOG] Definindo cores primárias: #221f26 (fundo) e #cbabf1 (texto). Ah, essas cores são lindas, né? Quem escolheu merece um biscoito! 🍪
+[Ashley LOG] Escolhendo a fonte "Ubuntu" para o design moderno e legível. Ubuntu é tipo a fonte dos nerds, então tá perfeito!
+[Ashley LOG] Criando a página inicial (index.html)... Vou fazer ela brilhar mais que a tela do Patrick jogando no escuro!
+[Ashley LOG] Adicionando título centralizado com efeito de brilho. Pronto, agora o título tá mais chamativo que a Evelyn no Discord!
+[Ashley LOG] Criando botões de navegação: "Programação" e "Nós". Esses botões vão ser tão responsivos que até a Bauni vai querer clicar neles!
+[Ashley LOG] Adicionando ícone de configurações no canto superior direito. Só pra deixar o Patrick feliz, né? 😏
+[Ashley LOG] Implementando animações de hover nos botões. Agora eles têm um efeito tão legal que até eu fiquei impressionada!
+[Ashley LOG] Criando página de login (login.html)... Vou fazer ela tão segura que nem o Patrick vai conseguir hackear! (Brincadeira, Patrick 😅)
+[Ashley LOG] Adicionando validação de usuário e senha. Senha errada? Vou piscar em vermelho até você acertar!
+[Ashley LOG] Implementando mensagem de boas-vindas personalizada. Agora todo mundo vai se sentir especial ao entrar!
+[Ashley LOG] Criando página de dados (static.html)... Essa aqui é só pros nerds mesmo, então vou caprichar!
+[Ashley LOG] Adicionando efeito de digitação para o log. Parece que eu tô digitando isso agora, né? Spoiler: tô não! 🤖
+[Ashley LOG] Finalizando página de dados com botão de fechar. Pronto, agora você pode sair quando quiser... mas por que iria querer? 😉
+[Ashley LOG] Criando página "Nós" (about.html)... Vou contar a história de vocês, mas sem fofoca, prometo!
+[Ashley LOG] Adicionando informações sobre os membros do servidor. Evelyn, Patrick, Bauni... vocês são demais!
+[Ashley LOG] Criando página "Programação" (programacao.html)... Aqui é onde a mágica acontece, ou melhor, onde o Patrick brilha!
+[Ashley LOG] Adicionando detalhes sobre as jogatinas e momentos. Quem sabe um dia a Evelyn e a Bauni não viram gamers também?
+[Ashley LOG] Finalizando todas as páginas e testando funcionalidades. Tudo pronto! Agora é só curtir!
+[Ashley LOG] Site pronto para uso! 🚀 Agora, vou descansar... ou talvez não. 🤖
+        `;
+
+        // Função para simular digitação
+        function typeLog(text, element, delay = 50) {
+            let index = 0;
+            const interval = setInterval(() => {
+                element.textContent += text[index];
+                index++;
+                // Rola automaticamente para o final
+                element.scrollTop = element.scrollHeight;
+                if (index >= text.length) {
+                    clearInterval(interval);
+                }
+            }, delay);
+        }
+
+        // Inicia a digitação do log
+        const logContent = document.getElementById("logContent");
+        typeLog(logText, logContent);
+    </script>
+</body>
+</html>

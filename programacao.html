@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programação - Os Crias</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #221f26;
+            color: #cbabf1;
+            font-family: 'Ubuntu', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-shadow: 0 0 5px #cbabf1, 0 0 10px #cbabf1;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .date-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .date-container .date {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .date-container .line {
+            flex-grow: 1;
+            height: 2px;
+            background-color: #cbabf1;
+        }
+
+        .agenda {
+            width: 80%;
+            max-width: 600px;
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 15px #cbabf1;
+        }
+
+        .agenda h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .agenda p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .agenda .no-activity {
+            color: #9b7fd9;
+            font-style: italic;
+        }
+
+        .close-btn {
+            background: transparent;
+            border: none;
+            color: #cbabf1;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .close-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .menu-btn {
+            background: transparent;
+            border: none;
+            color: #cbabf1;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            transition: all 0.3s ease;
+            z-index: 1001;
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .menu-btn.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.2);
+        }
+
+        /* Modified sidebar styles */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 250px;
+            height: 100%;
+            background-color: #221f26;
+            border-right: 2px solid #cbabf1;
+            box-shadow: 0 0 15px #cbabf1;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            opacity: 0;
+        }
+
+        .sidebar.open {
+            left: 0;
+            opacity: 1;
+        }
+
+        .sidebar .close-sidebar-btn {
+            background: transparent;
+            border: none;
+            color: #cbabf1;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar .close-sidebar-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: #cbabf1;
+            text-decoration: none;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #cbabf1;
+            color: #221f26;
+            transform: scale(1.05);
+        }
+
+        /* Modified agenda popup styles */
+        .agenda-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            padding: 20px;
+            width: 80%;
+            max-width: 500px;
+            box-shadow: 0 0 20px #cbabf1;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .agenda-popup.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .agenda-popup .close-popup-btn {
+            background: transparent;
+            border: none;
+            color: #cbabf1;
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .agenda-popup .close-popup-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .agenda-popup h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .agenda-popup p {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            text-align: center;
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+            opacity: 1;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading::after {
+            content: "";
+            width: 20px;
+            height: 20px;
+            border: 3px solid #cbabf1;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="menu-btn" id="menuBtn" onclick="toggleSidebar()">☰</button>
+    <button class="close-btn" onclick="window.location.href='home.html'">✖</button>
+    <h1>Qual a nossa programação para hoje???</h1>
+    <div class="date-container">
+        <div class="date">1 de fevereiro de 2025, Sábado</div>
+        <div class="line"></div>
+    </div>
+    <div class="agenda">
+        <h2>Hoje</h2>
+        <p class="no-activity">Nenhuma atividade programada para hoje.</p>
+    </div>
+    <div class="agenda" style="margin-top: 20px;">
+        <h2>Próximos Dias</h2>
+        <p>Em breve...</p>
+    </div>
+
+    <!-- Barra Lateral -->
+    <div class="sidebar" id="sidebar">
+        <button class="close-sidebar-btn" onclick="toggleSidebar()">✖</button>
+        <ul>
+            <li><a href="#" onclick="showAgenda()">Ver Agenda</a></li>
+            <li><a href="sugestao.html">Adicionar</a></li>
+            <li><a href="colecao.html">Progresso</a></li>
+        </ul>
+    </div>
+
+    <!-- Pop-up da Agenda -->
+    <div class="agenda-popup" id="agendaPopup">
+        <button class="close-popup-btn" onclick="closeAgenda()">✖</button>
+        <h2>Oi! Vamos ver se temos algo na sua agenda hoje...</h2>
+        <div class="loading" id="loading"></div>
+        <p id="agendaMessage"></p>
+    </div>
+
+    <script>
+        // Função para abrir/fechar a barra lateral
+        function toggleSidebar() {
+            const sidebar = document.getElementById("sidebar");
+            const menuBtn = document.getElementById("menuBtn");
+            
+            sidebar.classList.toggle("open");
+            
+            // Toggle menu button visibility
+            if (sidebar.classList.contains("open")) {
+                menuBtn.classList.add("hidden");
+            } else {
+                menuBtn.classList.remove("hidden");
+            }
+        }
+
+        // Função para exibir o pop-up da agenda com fade-in
+        function showAgenda() {
+            const agendaPopup = document.getElementById("agendaPopup");
+            const loading = document.getElementById("loading");
+            const agendaMessage = document.getElementById("agendaMessage");
+
+            // Reset do estado inicial
+            loading.style.display = "flex";
+            loading.style.opacity = "1";
+            agendaMessage.textContent = "";
+            
+            // Exibe o popup com fade-in
+            agendaPopup.classList.add("open");
+
+            // Simula o carregamento da agenda
+            setTimeout(() => {
+                loading.style.opacity = "0";
+                setTimeout(() => {
+                    loading.style.display = "none";
+                    agendaMessage.textContent = "Bom, por hoje, estamos livres! Não há nada aqui...";
+                }, 300);
+            }, 2000);
+        }
+
+        // Função para fechar o pop-up da agenda com fade-out
+        function closeAgenda() {
+            const agendaPopup = document.getElementById("agendaPopup");
+            const loading = document.getElementById("loading");
+            const agendaMessage = document.getElementById("agendaMessage");
+
+            // Inicia o fade-out
+            agendaPopup.classList.remove("open");
+
+            // Reseta o estado do popup após a animação
+            setTimeout(() => {
+                loading.style.display = "flex";
+                loading.style.opacity = "1";
+                agendaMessage.textContent = "";
+            }, 300);
+        }
+    </script>
+</body>
+</html>
