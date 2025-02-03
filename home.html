@@ -25,6 +25,10 @@
             from { opacity: 0; }
             to { opacity: 1; }
         }
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
         h1 {
             font-size: 2.5rem;
             font-weight: 700;
@@ -73,10 +77,45 @@
         .close-btn:hover {
             transform: scale(1.2);
         }
+        /* Estilos atualizados para a galeria */
+        .gallery-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 20px;
+            padding: 30px;
+            width: 300px;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        .gallery-container button.option-btn {
+            margin: 15px 0;
+            width: 100%;
+            padding: 10px;
+            background-color: #221f26;
+            border: 2px solid #cbabf1;
+            border-radius: 10px;
+            color: #cbabf1;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .gallery-container button.option-btn:hover {
+            background-color: #cbabf1;
+            color: #221f26;
+        }
+        .gallery-container .error-message {
+            color: red;
+            font-size: 0.9rem;
+            margin-top: 15px;
+        }
     </style>
 </head>
 <body>
-    <!-- Botão de fechar no canto superior direito -->
+    <!-- Botão de fechar principal -->
     <button class="close-btn" onclick="window.location.href='index.html'">✖</button>
 
     <h1 id="greeting">Olá! Essa é a nossa casa!</h1>
@@ -84,11 +123,55 @@
         <button onclick="redirectTo('programacao.html')">Programação</button>
         <button onclick="redirectTo('pessoal.html')">Pessoal</button>
         <button onclick="redirectTo('colecao.html')">Coleção</button>
+        <button onclick="openGallery()">Galeria</button>
     </div>
+
+    <!-- Container da Galeria (Agora com botão correto) -->
+    <div id="galleryContainer" class="gallery-container">
+        <button class="close-btn" onclick="closeGallery()" style="position: absolute; top: 15px; right: 15px;">✖</button>
+        <h3>Qual a galeria que deseja entrar?</h3>
+        <button class="option-btn" onclick="validateGallery('Evelyn')">Evelyn</button>
+        <button class="option-btn" onclick="validateGallery('Patrick')">Patrick</button>
+        <button class="option-btn" onclick="validateGallery('Eishyla')">Eishyla</button>
+        <p class="error-message">A validação é necessária para sua segurança.</p>
+    </div>
+
     <script>
-        // Função para redirecionar
+        // Funções de redirecionamento
         function redirectTo(page) {
             window.location.href = page;
+        }
+
+        // Controle da Galeria
+        function openGallery() {
+            const gallery = document.getElementById('galleryContainer');
+            gallery.style.display = 'block';
+            gallery.style.animation = 'fadeIn 0.5s';
+        }
+
+        function closeGallery() {
+            const gallery = document.getElementById('galleryContainer');
+            gallery.style.animation = 'fadeOut 0.5s';
+            setTimeout(() => gallery.style.display = 'none', 450);
+        }
+
+        // Validação de Código (Agora com feedback preciso)
+        function validateGallery(user) {
+            const codes = {
+                Evelyn: '150107',
+                Patrick: '180706',
+                Eishyla: '384679'
+            };
+
+            const input = prompt(`Qual o código de acesso para a galeria de ${user}?`);
+            
+            if (input === codes[user]) {
+                window.location.href = `galeria${user.toLowerCase()}.html`;
+            } else {
+                alert(`🚨 Código incorreto! Você não é ${user}.`);
+                closeGallery();
+                setTimeout(() => window.location.reload(), 500); // Reset suave
+            }
         }
     </script>
 </body>
