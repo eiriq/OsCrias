@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Galeria Patrick</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
+    
+    body {
+      margin: 0;
+      padding: 20px;
+      background-color: #221f26;
+      color: #cbabf1;
+      font-family: 'Ubuntu', sans-serif;
+      opacity: 0;
+      animation: fadeIn 1.5s ease forwards;
+      overflow-y: scroll;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    ::-webkit-scrollbar {
+      width: 10px;
+      background: #221f26;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: #cbabf1;
+      border-radius: 5px;
+      border: 2px solid #221f26;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      color: #cbabf1;
+      font-size: 1.5rem;
+      cursor: pointer;
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+
+    .close-btn:hover {
+      transform: scale(1.2);
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 40px;
+      padding-top: 20px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .photo-frame {
+      border: 3px solid #cbabf1;
+      border-radius: 15px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      position: relative;
+      aspect-ratio: 1/1;
+    }
+
+    .photo-frame:hover {
+      transform: translateY(-5px);
+    }
+
+    .gallery-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .fullscreen-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.9);
+      z-index: 999;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      animation: fadeInOverlay 0.5s ease forwards;
+    }
+
+    @keyframes fadeInOverlay {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .fullscreen-overlay.closing {
+      animation: fadeOutOverlay 0.5s ease forwards;
+    }
+
+    @keyframes fadeOutOverlay {
+      from { opacity: 1; }
+      to { opacity: 0; }
+    }
+
+    .fullscreen-image {
+      max-width: 90%;
+      max-height: 90%;
+      border: 3px solid #cbabf1;
+      border-radius: 15px;
+    }
+
+    .fullscreen-controls {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .fullscreen-close-btn,
+    .download-btn {
+      background: transparent;
+      border: none;
+      color: #cbabf1;
+      font-size: 1.5rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .fullscreen-close-btn:hover,
+    .download-btn:hover {
+      transform: scale(1.2);
+    }
+
+    .download-btn svg {
+      width: 24px;
+      height: 24px;
+      fill: #cbabf1;
+    }
+  </style>
+</head>
+<body>
+  <button class="close-btn" onclick="window.location.href='home.html'">✖</button>
+
+  <div class="gallery-header">
+    <h1>Bem-vindo a sua galeria, Patrick!</h1>
+    <h3>Veja algumas fotos dos seus momentos no server!</h3>
+  </div>
+
+  <div class="gallery-grid" id="galleryGrid"></div>
+
+  <div class="fullscreen-overlay" id="fullscreenOverlay">
+    <div class="fullscreen-controls">
+      <button class="fullscreen-close-btn" onclick="closeFullscreen()">✖</button>
+      <button class="download-btn" onclick="downloadImage()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+        </svg>
+      </button>
+    </div>
+    <img class="fullscreen-image" id="expandedImage" alt="Imagem em tela cheia">
+  </div>
+
+  <script>
+    // Gerar imagens
+    const galleryGrid = document.getElementById('galleryGrid');
+    for (let i = 1; i <= 8; i++) {
+      const frame = document.createElement('div');
+      frame.className = 'photo-frame';
+      const img = document.createElement('img');
+      img.src = `galpatrick${i}.png`;
+      img.className = 'gallery-image';
+      img.onclick = () => openFullscreen(img.src);
+      frame.appendChild(img);
+      galleryGrid.appendChild(frame);
+    }
+
+    // Funções de tela cheia
+    function openFullscreen(src) {
+      const overlay = document.getElementById('fullscreenOverlay');
+      const mainCloseBtn = document.querySelector('.close-btn');
+      document.getElementById('expandedImage').src = src;
+      overlay.style.display = 'flex';
+      overlay.classList.remove('closing');
+      mainCloseBtn.style.display = 'none';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeFullscreen() {
+      const overlay = document.getElementById('fullscreenOverlay');
+      const mainCloseBtn = document.querySelector('.close-btn');
+      overlay.classList.add('closing');
+      setTimeout(() => {
+        overlay.style.display = 'none';
+        mainCloseBtn.style.display = 'block';
+        document.body.style.overflow = 'auto';
+      }, 500);
+    }
+
+    // Função de download CORRIGIDA
+    function downloadImage() {
+      const imgSrc = document.getElementById('expandedImage').src;
+      const fileName = imgSrc.split('/').pop(); // Pega o nome original do arquivo
+      const link = document.createElement('a');
+      link.href = imgSrc;
+      link.download = fileName || `patrick-gallery-${Date.now()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Fechar ao clicar fora
+    document.getElementById('fullscreenOverlay').onclick = (e) => {
+      if (e.target === document.getElementById('fullscreenOverlay')) {
+        closeFullscreen();
+      }
+    }
+  </script>
+</body>
+</html>
